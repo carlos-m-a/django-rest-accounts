@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools >= 61.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-reusable-app"
+version = "0.0.1"
+readme = "README.md"
+license = {file = "LICENSE"}
+description = ""
+requires-python = ">=3.8"
+dependencies = [
+  "Django >= 4.2",
+  "djangorestframework",
+]
+authors = [
+  { name = "My Name", email = "me@email.com" },
+]
+keywords = ["example1", "example2"]
+
+[project.urls]
+Homepage = "https://github.com/organization/package"
+"Bug Tracker" = "https://github.com/organization/package/issues"
+
+
+[tool.setuptools.packages.find]
+include = ["reusable_app*"]
