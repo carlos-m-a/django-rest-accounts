@@ -1,11 +1,24 @@
 version: '3.8'
 
 services:
+  waiter:
+    build: 
+      context: .
+      dockerfile: docker/Dockerfile_waiter
+      target: waiter
+    image: django_rest_accounts_waiter
+    depends_on:
+      web:
+        condition: service_healthy
   web:
-    build: .
-    image: django_reusable_app_web
+    build: 
+      context: .
+      target: dev
+    image: django_rest_accounts_web
     command: >
-      sh -c "python manage.py makemigrations &&
+      sh -c "python -m pip install -r requirements.dev.txt
+             python -m pip install -r docker/requirements.dev.txt
+             python manage.py makemigrations &&
              python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     volumes:
@@ -18,7 +31,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    container_name: django_reusable_app
+    healthcheck:
+      test: ["CMD-SHELL", "curl http://localhost:8000 && exit 0"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
   db:
     image: postgres:15
     volumes:

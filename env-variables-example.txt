@@ -2,7 +2,7 @@
 # 2- Change values to proper ones in your host
 # 3- Create and activate a virtual env (virtualenv, venv, etc)
 
-SECRET_KEY=
+SECRET_KEY=changethis
 #True in development, False in production
 DEBUG=True
 #Hosts separated by ',': example.com,127.0.0.1,example1.com
@@ -10,10 +10,10 @@ ALLOWED_HOSTS=
 
 #postgre: django.db.backends.postgresql
 #mariadb-mysql: django.db.backends.mysql
-#sqlite (only for dev, you don't need to install anything): django.db.backends.sqlite3
-DATABASE_ENGINE=
-#sqlite: BASE_DIR / 'db.sqlite3'
-DATABASE_NAME=django_basic
+#sqlite (DEV): django.db.backends.sqlite3 (nothing to install)
+DATABASE_ENGINE=django.db.backends.sqlite3
+#sqlite: db.sqlite3
+DATABASE_NAME=db.sqlite3
 DATABASE_USER=
 DATABASE_PASSWORD=
 DATABASE_HOST=
@@ -22,7 +22,7 @@ DATABASE_PORT=
 
 #django.core.mail.backends.console.EmailBackend for development
 #django.core.mail.backends.smtp.EmailBackend for smtp
-EMAIL_BACKEND=
+EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 EMAIL_HOST=
 #55 for default port, 587 for smpt+tls
 EMAIL_PORT=

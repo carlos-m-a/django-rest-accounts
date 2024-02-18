@@ -25,9 +25,9 @@ urlpatterns = [
     path('auth-token/', obtain_auth_token, name='auth-token'),
     path('admin/', admin.site.urls),
     path('auth/', include('django.contrib.auth.urls')),
-    path('__debug__/', include('debug_toolbar.urls')),
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))

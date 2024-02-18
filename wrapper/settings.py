@@ -21,7 +21,6 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 INSTALLED_APPS = [
     'accounts',
-    'debug_toolbar',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,8 +41,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'wrapper.urls'
@@ -80,6 +77,10 @@ DATABASES = {
         'PORT': env("DATABASE_PORT"),
     }
 }
+for database in DATABASES.values():
+    if DEBUG and database['ENGINE'] == "django.db.backends.sqlite3" and not "/" in database['NAME']:
+        database['NAME'] = BASE_DIR / database['NAME']
+
 
 # EMAILS (reset passwords, etc)
 EMAIL_BACKEND = env('EMAIL_BACKEND')
@@ -157,3 +158,15 @@ REST_FRAMEWORK = {
 # REUSABLE_APP CUSTOM SETTINGS
 #Custon settings (define here whatever variable needed by the reusable app)
 SITE_DOMAIN_NAME = env('SITE_DOMAIN_NAME')
+
+# Django-debug-toolbar settings, only when DEBUG mode
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+    # INTERNAL_IPS = type(str('c'), (), {'__contains__': lambda *a: True})()
+    import socket
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+    DEBUG_TOOLBAR_CONFIG = {
+        "SHOW_TOOLBAR_CALLBACK": lambda request: True,
+    }

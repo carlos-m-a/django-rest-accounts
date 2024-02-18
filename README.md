@@ -22,10 +22,11 @@ Supposing that "new_app_name" is the name of your new app:
 3. Change repo name (django-new-app-name) and app name ("reusable_app" to "new_app_name")
 4. In wrapper/settings.py, change INSTALLED_APPS: "reusable_app" to "new_app_name"
 5. In wrapper/urls.py, change: "reusable_app" to "new_app_name"
-6. Inside "new_app_name" folder, remember to change the app name variable in apps.py and urls.py
-6. Inside Manifest.in, change "reusable_app" to "new_app_name"
-6. git init .
-7. Remember modify pyproject.toml with your new repo name and app name
+6. Inside "new_app_name" folder, remember to change the app name variable in apps.py and urls.py, and also change folder name inside static or templates folder.
+7. Inside Manifest.in, change "reusable_app" to "new_app_name"
+8. git init .
+9. Remember modify pyproject.toml with your new repo name and app name
+10. If you prefer, you can update the image/container name in docker-compose.yml
 
 
 ## How to run using Docker
@@ -34,7 +35,7 @@ Docker files (Dockerfile, docker-compose.yml, .env.dev) are ready to use.
 
 To run the containers: `docker compose up -d --build`
 
-Now wait and go to http://localhost:8000/reusable_app/my_model_list/ to check if it runs correctly.
+Now, wait for Docker to finish the command and go to http://localhost:8000/reusable_app/my_model_list/ to check if it runs correctly.
 
 To stop and remove everything: `docker compose down -v --rmi "local"`
 
@@ -47,6 +48,8 @@ That's it, docker makes things easy.
 1. Install requirements using pip (Remember to create your virtual environment):
 
     pip install -r requirements.txt
+    
+    pip install -r requirements.dev.txt
 
 2. Copy-paste env-variables-example.txt inside "wrapper" folder, and change the name to ".env"
 
