@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile_waiter
       target: waiter
-    image: django_reusable_app_waiter
+    image: django_rest_accounts_waiter
     depends_on:
       web:
         condition: service_healthy
@@ -14,7 +14,7 @@ services:
     build: 
       context: .
       target: dev
-    image: django_reusable_app_web
+    image: django_rest_accounts_web
     volumes:
       - /usr/src/app/static
       - .:/usr/src/app/
