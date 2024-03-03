@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile_waiter
       target: waiter
-    image: django_rest_accounts_waiter
+    image: django_reusable_app_waiter
     depends_on:
       web:
         condition: service_healthy
@@ -14,20 +14,14 @@ services:
     build: 
       context: .
       target: dev
-    image: django_rest_accounts_web
-    command: >
-      sh -c "python -m pip install -r requirements.dev.txt
-             python -m pip install -r docker/requirements.dev.txt
-             python manage.py makemigrations &&
-             python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:8000"
+    image: django_reusable_app_web
     volumes:
       - /usr/src/app/static
       - .:/usr/src/app/
     ports:
       - 8000:8000
     env_file:
-      - ./docker/.env.dev
+      - ./docker/dev.env
     depends_on:
       db:
         condition: service_healthy
